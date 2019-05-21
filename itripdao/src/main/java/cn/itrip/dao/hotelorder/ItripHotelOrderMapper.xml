@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itrip.dao.hotelorder.ItripHotelOrderMapper" >
+  <resultMap id="BaseResultMap" type="ItripHotelOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userId" property="userid" jdbcType="BIGINT" />
+    <result column="orderType" property="ordertype" jdbcType="INTEGER" />
+    <result column="orderNo" property="orderno" jdbcType="VARCHAR" />
+    <result column="tradeNo" property="tradeno" jdbcType="VARCHAR" />
+    <result column="hotelId" property="hotelid" jdbcType="BIGINT" />
+    <result column="hotelName" property="hotelname" jdbcType="VARCHAR" />
+    <result column="roomId" property="roomid" jdbcType="BIGINT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="bookingDays" property="bookingdays" jdbcType="INTEGER" />
+    <result column="checkInDate" property="checkindate" jdbcType="TIMESTAMP" />
+    <result column="checkOutDate" property="checkoutdate" jdbcType="TIMESTAMP" />
+    <result column="orderStatus" property="orderstatus" jdbcType="INTEGER" />
+    <result column="payAmount" property="payamount" jdbcType="DECIMAL" />
+    <result column="payType" property="paytype" jdbcType="INTEGER" />
+    <result column="noticePhone" property="noticephone" jdbcType="VARCHAR" />
+    <result column="noticeEmail" property="noticeemail" jdbcType="VARCHAR" />
+    <result column="isNeedInvoice" property="isneedinvoice" jdbcType="INTEGER" />
+    <result column="invoiceType" property="invoicetype" jdbcType="INTEGER" />
+    <result column="invoiceHead" property="invoicehead" jdbcType="VARCHAR" />
+    <result column="linkUserName" property="linkusername" jdbcType="VARCHAR" />
+    <result column="bookType" property="booktype" jdbcType="INTEGER" />
+    <result column="creationDate" property="creationdate" jdbcType="TIMESTAMP" />
+    <result column="createdBy" property="createdby" jdbcType="BIGINT" />
+    <result column="modifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="ItripHotelOrder" extends="BaseResultMap" >
+    <result column="specialRequirement" property="specialrequirement" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, orderType, orderNo, tradeNo, hotelId, hotelName, roomId, count, bookingDays, 
+    checkInDate, checkOutDate, orderStatus, payAmount, payType, noticePhone, noticeEmail, 
+    isNeedInvoice, invoiceType, invoiceHead, linkUserName, bookType, creationDate, createdBy, 
+    modifyDate, modifiedBy
+  </sql>
+  <sql id="Blob_Column_List" >
+    specialRequirement
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from itrip_hotel_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectCondition" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from itrip_hotel_order
+    where orderNo = #{orderNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from itrip_hotel_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="ItripHotelOrder" >
+    insert into itrip_hotel_order (userId, orderType,
+      orderNo, tradeNo, hotelId, 
+      hotelName, roomId, count, 
+      bookingDays, checkInDate, checkOutDate, 
+      orderStatus, payAmount, payType, 
+      noticePhone, noticeEmail, isNeedInvoice, 
+      invoiceType, invoiceHead, linkUserName, 
+      bookType, creationDate, createdBy, 
+      modifyDate, modifiedBy, specialRequirement
+      )
+    values (#{userid,jdbcType=BIGINT}, #{ordertype,jdbcType=INTEGER},
+      #{orderno,jdbcType=VARCHAR}, #{tradeno,jdbcType=VARCHAR}, #{hotelid,jdbcType=BIGINT}, 
+      #{hotelname,jdbcType=VARCHAR}, #{roomid,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, 
+      #{bookingdays,jdbcType=INTEGER}, #{checkindate,jdbcType=TIMESTAMP}, #{checkoutdate,jdbcType=TIMESTAMP}, 
+      #{orderstatus,jdbcType=INTEGER}, #{payamount,jdbcType=DECIMAL}, #{paytype,jdbcType=INTEGER}, 
+      #{noticephone,jdbcType=VARCHAR}, #{noticeemail,jdbcType=VARCHAR}, #{isneedinvoice,jdbcType=INTEGER}, 
+      #{invoicetype,jdbcType=INTEGER}, #{invoicehead,jdbcType=VARCHAR}, #{linkusername,jdbcType=VARCHAR}, 
+      #{booktype,jdbcType=INTEGER}, #{creationdate,jdbcType=TIMESTAMP}, #{createdby,jdbcType=BIGINT}, 
+      #{modifydate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=BIGINT}, #{specialrequirement,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ItripHotelOrder" >
+    insert into itrip_hotel_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="ordertype != null" >
+        orderType,
+      </if>
+      <if test="orderno != null" >
+        orderNo,
+      </if>
+      <if test="tradeno != null" >
+        tradeNo,
+      </if>
+      <if test="hotelid != null" >
+        hotelId,
+      </if>
+      <if test="hotelname != null" >
+        hotelName,
+      </if>
+      <if test="roomid != null" >
+        roomId,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="bookingdays != null" >
+        bookingDays,
+      </if>
+      <if test="checkindate != null" >
+        checkInDate,
+      </if>
+      <if test="checkoutdate != null" >
+        checkOutDate,
+      </if>
+      <if test="orderstatus != null" >
+        orderStatus,
+      </if>
+      <if test="payamount != null" >
+        payAmount,
+      </if>
+      <if test="paytype != null" >
+        payType,
+      </if>
+      <if test="noticephone != null" >
+        noticePhone,
+      </if>
+      <if test="noticeemail != null" >
+        noticeEmail,
+      </if>
+      <if test="isneedinvoice != null" >
+        isNeedInvoice,
+      </if>
+      <if test="invoicetype != null" >
+        invoiceType,
+      </if>
+      <if test="invoicehead != null" >
+        invoiceHead,
+      </if>
+      <if test="linkusername != null" >
+        linkUserName,
+      </if>
+      <if test="booktype != null" >
+        bookType,
+      </if>
+      <if test="creationdate != null" >
+        creationDate,
+      </if>
+      <if test="createdby != null" >
+        createdBy,
+      </if>
+      <if test="modifydate != null" >
+        modifyDate,
+      </if>
+      <if test="modifiedby != null" >
+        modifiedBy,
+      </if>
+      <if test="specialrequirement != null" >
+        specialRequirement,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordertype != null" >
+        #{ordertype,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeno != null" >
+        #{tradeno,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelid != null" >
+        #{hotelid,jdbcType=BIGINT},
+      </if>
+      <if test="hotelname != null" >
+        #{hotelname,jdbcType=VARCHAR},
+      </if>
+      <if test="roomid != null" >
+        #{roomid,jdbcType=BIGINT},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="bookingdays != null" >
+        #{bookingdays,jdbcType=INTEGER},
+      </if>
+      <if test="checkindate != null" >
+        #{checkindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkoutdate != null" >
+        #{checkoutdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderstatus != null" >
+        #{orderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="payamount != null" >
+        #{payamount,jdbcType=DECIMAL},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="noticephone != null" >
+        #{noticephone,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeemail != null" >
+        #{noticeemail,jdbcType=VARCHAR},
+      </if>
+      <if test="isneedinvoice != null" >
+        #{isneedinvoice,jdbcType=INTEGER},
+      </if>
+      <if test="invoicetype != null" >
+        #{invoicetype,jdbcType=INTEGER},
+      </if>
+      <if test="invoicehead != null" >
+        #{invoicehead,jdbcType=VARCHAR},
+      </if>
+      <if test="linkusername != null" >
+        #{linkusername,jdbcType=VARCHAR},
+      </if>
+      <if test="booktype != null" >
+        #{booktype,jdbcType=INTEGER},
+      </if>
+      <if test="creationdate != null" >
+        #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        #{modifiedby,jdbcType=BIGINT},
+      </if>
+      <if test="specialrequirement != null" >
+        #{specialrequirement,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="ItripHotelOrder" >
+    update itrip_hotel_order
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordertype != null" >
+        orderType = #{ordertype,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        orderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeno != null" >
+        tradeNo = #{tradeno,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelid != null" >
+        hotelId = #{hotelid,jdbcType=BIGINT},
+      </if>
+      <if test="hotelname != null" >
+        hotelName = #{hotelname,jdbcType=VARCHAR},
+      </if>
+      <if test="roomid != null" >
+        roomId = #{roomid,jdbcType=BIGINT},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="bookingdays != null" >
+        bookingDays = #{bookingdays,jdbcType=INTEGER},
+      </if>
+      <if test="checkindate != null" >
+        checkInDate = #{checkindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkoutdate != null" >
+        checkOutDate = #{checkoutdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderstatus != null" >
+        orderStatus = #{orderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="payamount != null" >
+        payAmount = #{payamount,jdbcType=DECIMAL},
+      </if>
+      <if test="paytype != null" >
+        payType = #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="noticephone != null" >
+        noticePhone = #{noticephone,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeemail != null" >
+        noticeEmail = #{noticeemail,jdbcType=VARCHAR},
+      </if>
+      <if test="isneedinvoice != null" >
+        isNeedInvoice = #{isneedinvoice,jdbcType=INTEGER},
+      </if>
+      <if test="invoicetype != null" >
+        invoiceType = #{invoicetype,jdbcType=INTEGER},
+      </if>
+      <if test="invoicehead != null" >
+        invoiceHead = #{invoicehead,jdbcType=VARCHAR},
+      </if>
+      <if test="linkusername != null" >
+        linkUserName = #{linkusername,jdbcType=VARCHAR},
+      </if>
+      <if test="booktype != null" >
+        bookType = #{booktype,jdbcType=INTEGER},
+      </if>
+      <if test="creationdate != null" >
+        creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        createdBy = #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null" >
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        modifiedBy = #{modifiedby,jdbcType=BIGINT},
+      </if>
+      <if test="specialrequirement != null" >
+        specialRequirement = #{specialrequirement,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getItripHotelOrderListByMap" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from itrip_hotel_order
+    <where>
+      <trim prefix="" suffix="" suffixOverrides="," >
+      <if test="userid != null" >
+        and userid=#{userid,jdbcType=BIGINT}
+      </if>
+      <if test="ordertype != null" >
+        and ordertype =#{ordertype,jdbcType=INTEGER}
+      </if>
+      <if test="orderno != null" >
+        and orderno=#{orderno,jdbcType=VARCHAR}
+      </if>
+      <if test="tradeno != null" >
+        and tradeno=#{tradeno,jdbcType=VARCHAR}
+      </if>
+      <if test="hotelid != null" >
+        and hotelid=#{hotelid,jdbcType=BIGINT}
+      </if>
+      <if test="hotelname != null" >
+        and hotelname=#{hotelname,jdbcType=VARCHAR}
+      </if>
+      <if test="roomid != null" >
+        and roomid=#{roomid,jdbcType=BIGINT}
+      </if>
+      <if test="count != null" >
+        and count=#{count,jdbcType=INTEGER}
+      </if>
+      <if test="bookingdays != null" >
+        and bookingdays=#{bookingdays,jdbcType=INTEGER}
+      </if>
+      <if test="checkindate != null" >
+        and checkindate=#{checkindate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="checkoutdate != null" >
+        and checkoutdate=#{checkoutdate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="orderstatus != null" >
+        and orderstatus=#{orderstatus,jdbcType=INTEGER}
+      </if>
+      <if test="payamount != null" >
+        and payamount=#{payamount,jdbcType=DECIMAL}
+      </if>
+      <if test="paytype != null" >
+        and paytype=#{paytype,jdbcType=INTEGER}
+      </if>
+      <if test="noticephone != null" >
+        and noticephone=#{noticephone,jdbcType=VARCHAR}
+      </if>
+      <if test="noticeemail != null" >
+        and noticeemail=#{noticeemail,jdbcType=VARCHAR}
+      </if>
+      <if test="isneedinvoice != null" >
+        and isneedinvoice=#{isneedinvoice,jdbcType=INTEGER}
+      </if>
+      <if test="invoicetype != null" >
+        and  invoicetype=#{invoicetype,jdbcType=INTEGER}
+      </if>
+      <if test="invoicehead != null" >
+        and invoicehead=#{invoicehead,jdbcType=VARCHAR}
+      </if>
+      <if test="linkusername != null" >
+        and linkusername=#{linkusername,jdbcType=VARCHAR}
+      </if>
+      <if test="booktype != null" >
+        and booktype=#{booktype,jdbcType=INTEGER}
+      </if>
+      <if test="creationdate != null" >
+        and creationdate=#{creationdate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createdby != null" >
+        and createdby=#{createdby,jdbcType=BIGINT}
+      </if>
+      <if test="modifydate != null" >
+        and  modifydate=#{modifydate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="modifiedby != null" >
+        and modifiedby=#{modifiedby,jdbcType=BIGINT}
+      </if>
+      <if test="specialrequirement != null" >
+        and specialrequirement=#{specialrequirement,jdbcType=LONGVARCHAR}
+      </if>
+      </trim>
+    </where>
+    order by creationDate desc
+    <if test="beginPos != null and pageSize != null  and pageSize !='' ">
+      limit #{beginPos},#{pageSize}
+    </if>
+  </select>
+  <update id="updateHotelOrderStatus" parameterType="Long">
+    update itrip_hotel_order
+    set orderStatus = 4,
+    modifyDate = NOW()
+    <if test="modifiedBy != null and modifiedBy!=''">
+      ,modifiedBy=#{modifiedBy}
+    </if>
+    where id=#{id}
+  </update>
+
+  <update id="updateItripHotelOrder" parameterType="cn.itrip.beans.pojo.ItripHotelOrder">
+    update itrip_hotel_order
+    <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+      <if test="orderNo != null and orderNo!=''">
+        orderNo=#{orderNo},
+      </if>
+      <if test="tradeNo != null and tradeNo!=''">
+        tradeNo=#{tradeNo},
+      </if>
+      <if test="hotelId != null and hotelId!=''">
+        hotelId=#{hotelId},
+      </if>
+      <if test="hotelName != null and hotelName!=''">
+        hotelName=#{hotelName},
+      </if>
+      <if test="roomId != null and roomId!=''">
+        roomId=#{roomId},
+      </if>
+      <if test="count != null and count!=''">
+        count=#{count},
+      </if>
+      <if test="bookingDays != null and bookingDays!=''">
+        bookingDays=#{bookingDays},
+      </if>
+      <if test="checkInDate != null and checkInDate!=''">
+        checkInDate=#{checkInDate},
+      </if>
+      <if test="checkOutDate != null and checkOutDate!=''">
+        checkOutDate=#{checkOutDate},
+      </if>
+      <if test="orderStatus != null">
+        orderStatus=#{orderStatus},
+      </if>
+      <if test="payAmount != null and payAmount!=''">
+        payAmount=#{payAmount},
+      </if>
+      <if test="payType != null">
+        payType=#{payType},
+      </if>
+      <if test="noticePhone != null and noticePhone!=''">
+        noticePhone=#{noticePhone},
+      </if>
+      <if test="noticeEmail != null and noticeEmail!=''">
+        noticeEmail=#{noticeEmail},
+      </if>
+      <if test="specialRequirement != null and specialRequirement!=''">
+        specialRequirement=#{specialRequirement},
+      </if>
+      <if test="isNeedInvoice != null and isNeedInvoice!=''">
+        isNeedInvoice=#{isNeedInvoice},
+      </if>
+      <if test="invoiceType != null and invoiceType!=''">
+        invoiceType=#{invoiceType},
+      </if>
+      <if test="invoiceHead != null and invoiceHead!=''">
+        invoiceHead=#{invoiceHead},
+      </if>
+      <if test="linkUserName != null and linkUserName!=''">
+        linkUserName=#{linkUserName},
+      </if>
+      <if test="creationDate != null and creationDate!=''">
+        creationDate=#{creationDate},
+      </if>
+      <if test="createdBy != null and createdBy!=''">
+        createdBy=#{createdBy},
+      </if>
+      <if test="modifyDate != null and modifyDate!=''">
+        modifyDate=#{modifyDate},
+      </if>
+      <if test="modifiedBy != null and modifiedBy!=''">
+        modifiedBy=#{modifiedBy}
+      </if>
+    </trim>
+    where id=#{id}
+  </update>
+
+
+  <insert id="insertItripHotelOrder" useGeneratedKeys="true" keyProperty="id" parameterType="cn.itrip.beans.pojo.ItripHotelOrder">
+    insert into itrip_hotel_order(
+        userId,
+        orderType,
+        orderNo,
+        tradeNo,
+        hotelId,
+        hotelName,
+        roomId,
+        count,
+        bookingDays,
+        checkInDate,
+        checkOutDate,
+        orderStatus,
+        payAmount,
+        payType,
+        noticePhone,
+        noticeEmail,
+        specialRequirement,
+        isNeedInvoice,
+        invoiceType,
+        invoiceHead,
+        linkUserName,
+        creationDate,
+        createdBy,
+        modifyDate,
+        modifiedBy,
+        bookType)
+    values(
+              #{userid},
+              #{ordertype},
+              #{orderno},
+              #{tradeno},
+              #{hotelid},
+              #{hotelname},
+              #{roomid},
+              #{count},
+              #{bookingdays},
+              #{checkindate},
+              #{checkoutdate},
+              #{orderstatus},
+              #{payamount},
+              #{paytype},
+              #{noticephone},
+              #{noticeemail},
+              #{specialrequirement},
+              #{isneedinvoice},
+              #{invoicetype},
+              #{invoicehead},
+              #{linkusername},
+              #{creationdate},
+              #{createdby},
+              #{modifydate},
+              #{modifiedby},
+              #{booktype})
+</insert>
+
+  <select id="getItripHotelOrderById" resultType="cn.itrip.beans.pojo.ItripHotelOrder" >
+    select
+    id as id,
+    userId as userId,
+    orderType as orderType,
+    orderNo as orderNo,
+    tradeNo as tradeNo,
+    hotelId as hotelId,
+    hotelName as hotelName,
+    roomId as roomId,
+    count as count,
+    bookingDays as bookingDays,
+    checkInDate as checkInDate,
+    checkOutDate as checkOutDate,
+    orderStatus as orderStatus,
+    payAmount as payAmount,
+    payType as payType,
+    noticePhone as noticePhone,
+    noticeEmail as noticeEmail,
+    specialRequirement as specialRequirement,
+    isNeedInvoice as isNeedInvoice,
+    invoiceType as invoiceType,
+    invoiceHead as invoiceHead,
+    linkUserName as linkUserName,
+    creationDate as creationDate,
+    createdBy as createdBy,
+    modifyDate as modifyDate,
+    modifiedBy as modifiedBy,
+    bookType as bookType
+    from itrip_hotel_order
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null">
+        and id=#{id}
+      </if>
+    </trim>
+  </select>
+
+  <select id="getItripHotelOrderRoomInfoById" resultType="cn.itrip.beans.vo.order.ItripPersonalOrderRoomVO" >
+    select
+    o.id AS id,
+    o.hotelId AS hotelId,
+    o.hotelName AS hotelName,
+    h.hotelLevel AS hotelLevel,
+    h.address AS address,
+    o.roomId AS roomId,
+    r.roomTitle AS roomTitle,
+    r.roomBedTypeId AS roomBedTypeId,
+    o.count AS count,
+    o.bookingDays AS bookingDays,
+    o.checkInDate AS checkInDate,
+    o.checkOutDate AS checkOutDate,
+    o.specialRequirement AS specialRequirement,
+    o.linkUserName AS linkUserName,
+    o.payAmount AS payAmount,
+    r.payType AS roomPayType,
+    d.name as roomBedTypeName,
+    r.isHavingBreakfast as isHavingBreakfast,
+    dayofweek(o.checkInDate) as checkInWeek,
+    dayofweek(o.checkOutDate) as checkOutWeek
+    from itrip_hotel_order o,itrip_hotel h,itrip_hotel_room r,itrip_label_dic d
+    <trim prefix="where" prefixOverrides="and | or">
+      o.hotelId=h.id and o.roomId=r.id and d.id=r.roomBedTypeId
+      <if test="id != null">
+        and o.id=#{id}
+      </if>
+    </trim>
+  </select>
+  <select id="getOrderCountByMap" resultType="Integer"  parameterType="java.util.Map">
+    select count(*) from itrip_hotel_order
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id!=''">
+        and id=#{id}
+      </if>
+      <if test="userid != null and userid!=''">
+        and userId=#{userId}
+      </if>
+      <if test="ordertype != null">
+        and orderType=#{ordertype}
+      </if>
+      <if test="orderno != null and orderno!=''">
+        and orderNo like CONCAT ('%',#{orderno},'%')
+      </if>
+      <if test="hotelid != null and hotelid!=''">
+        and hotelId=#{hotelid}
+      </if>
+      <if test="hotelname != null and hotelname!=''">
+        and hotelName=#{hotelname}
+      </if>
+      <if test="checkIndate != null and checkIndate!=''">
+        and checkInDate=#{checkIndate}
+      </if>
+      <if test="orderstatus != null">
+        and orderStatus=#{orderstatus}
+      </if>
+      <if test="payamount != null and payamount!=''">
+        and payAmount=#{payamount}
+      </if>
+      <if test="linkusername != null and linkusername != ''">
+        and linkUserName like CONCAT ('%',#{linkusername},'%')
+      </if>
+      <if test="startdate != null and startdate!=''">
+        and creationDate &gt;= #{startdate}
+      </if>
+      <if test="enddate != null and enddate!=''">
+        and creationDate &lt;= #{enddate}
+      </if>
+    </trim>
+  </select>
+
+  <select id="getOrderListByMap" resultType="cn.itrip.beans.vo.order.ItripListHotelOrderVO" parameterType="java.util.Map">
+    select
+    id as id,
+    orderType as orderType,
+    orderNo as orderNo,
+    hotelId as hotelId,
+    hotelName as hotelName,
+    orderStatus as orderStatus,
+    count as count,
+    checkInDate as checkInDate,
+    payAmount as payAmount,
+    payType as payType,
+    linkUserName as linkUserName,
+    creationDate as creationDate
+    from itrip_hotel_order
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id!=''">
+        and id=#{id}
+      </if>
+      <if test="userId != null and userId!=''">
+        and userId=#{userId}
+      </if>
+      <if test="orderType != null">
+        and orderType=#{orderType}
+      </if>
+      <if test="orderNo != null and orderNo!=''">
+        and orderNo like CONCAT ('%',#{orderNo},'%')
+      </if>
+      <if test="hotelId != null and hotelId!=''">
+        and hotelId=#{hotelId}
+      </if>
+      <if test="hotelName != null and hotelName!=''">
+        and hotelName=#{hotelName}
+      </if>
+      <if test="checkInDate != null and checkInDate!=''">
+        and checkInDate=#{checkInDate}
+      </if>
+      <if test="orderStatus != null">
+        and orderStatus=#{orderStatus}
+      </if>
+      <if test="payAmount != null and payAmount!=''">
+        and payAmount=#{payAmount}
+      </if>
+      <if test="linkUserName != null and linkUserName != ''">
+        and linkUserName like CONCAT ('%',#{linkUserName},'%')
+      </if>
+      <if test="startDate != null and startDate!=''">
+        and creationDate &gt;= #{startDate}
+      </if>
+      <if test="endDate != null and endDate!=''">
+        and creationDate &lt;= #{endDate}
+      </if>
+    </trim>
+    order by creationDate desc
+    <if test="beginPos != null and pageSize != null  and pageSize !='' ">
+      limit #{beginPos},#{pageSize}
+    </if>
+  </select>
+
+</mapper>

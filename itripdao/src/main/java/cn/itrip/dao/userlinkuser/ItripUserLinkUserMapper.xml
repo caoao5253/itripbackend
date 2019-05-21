@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itrip.dao.userlinkuser.ItripUserLinkUserMapper">
+
+    <update id="updateItripUserLinkUser" parameterType="cn.itrip.beans.pojo.ItripUserLinkUser">
+        update itrip_user_link_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id != null and id!=''">
+                id=#{id},
+            </if>
+            <if test="linkusername != null and linkusername!=''">
+                linkUserName=#{linkusername},
+            </if>
+            <if test="linkidcard != null and linkidcard!=''">
+                linkIdCardType=#{linkidcardtype},
+            </if>
+            <if test="linkidcard != null and linkidcard!=''">
+                linkIdCard=#{linkidcard},
+            </if>
+            <if test="linkphone != null and linkphone!=''">
+                linkPhone=#{linkphone},
+            </if>
+            <if test="userid != null and userid!=''">
+                userId=#{userid},
+            </if>
+            <if test="creationdate != null and creationdate!=''">
+                creationDate=#{creationdate},
+            </if>
+            <if test="createdby != null and createdby!=''">
+                createdBy=#{createdby},
+            </if>
+            <if test="modifydate != null and modifydate!=''">
+                modifyDate=#{modifydate},
+            </if>
+            <if test="modifiedby != null and modifiedby!=''">
+                modifiedBy=#{modifiedby}
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+    <delete id="deleteItripUserLinkUserByIds" parameterType="Long">
+        delete from itrip_user_link_user where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="insertItripUserLinkUser" parameterType="cn.itrip.beans.pojo.ItripUserLinkUser">
+    insert into itrip_user_link_user(
+                    linkUserName,
+                    linkIdCardType,
+                    linkIdCard,
+                    linkPhone,
+                    userId,
+                    creationDate,
+                    createdBy,
+                    modifyDate,
+                    modifiedBy)
+    values(
+                 #{linkusername},
+                 #{linkidcardtype},
+                 #{linkidcard},
+                 #{linkphone},
+                 #{userid},
+                 #{creationdate},
+                 #{createdby},
+                 #{modifydate},
+                #{modifiedby})
+</insert>
+    <select id="getItripUserLinkUserListByMap" resultType="cn.itrip.beans.pojo.ItripUserLinkUser"
+            parameterType="java.util.Map">
+        select
+        id as id,
+        linkUserName as linkUserName,
+        linkIdCardType as linkIdCardType,
+        linkIdCard as linkIdCard,
+        linkPhone as linkPhone,
+        userId as userId,
+        creationDate as creationDate,
+        createdBy as createdBy,
+        modifyDate as modifyDate,
+        modifiedBy as modifiedBy
+        from itrip_user_link_user
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null and id!=''">
+                and id=#{id}
+            </if>
+            <if test="linkusername != null and linkusername != ''">
+                and linkUserName like CONCAT ('%',#{linkusername},'%')
+            </if>
+            <if test="linkidcard != null and linkidcard!=''">
+                and linkIdCard=#{linkidcard}
+            </if>
+            <if test="linkphone != null and linkphone!=''">
+                and linkPhone=#{linkphone}
+            </if>
+            <if test="userid != null and userid!=''">
+                and userId=#{userid}
+            </if>
+            <if test="creationdate != null and creationdate!=''">
+                and creationDate=#{creationdate}
+            </if>
+            <if test="createdby != null and createdby!=''">
+                and createdBy=#{createdby}
+            </if>
+            <if test="modifydate != null and modifydate!=''">
+                and modifyDate=#{modifydate}
+            </if>
+        </trim>
+        order by creationDate desc
+    </select>
+
+
+</mapper>

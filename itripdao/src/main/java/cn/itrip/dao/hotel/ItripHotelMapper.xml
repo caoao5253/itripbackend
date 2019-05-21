@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itrip.dao.hotel.ItripHotelMapper">
+
+    <select id="getItripHotelById" resultType="ItripHotel">
+        select
+        id as id,
+        hotelName as hotelName,
+        countryId as countryId,
+        provinceId as provinceId,
+        cityId as cityId,
+        address as address,
+        details as details,
+        facilities as facilities,
+        hotelPolicy as hotelPolicy,
+        hotelType as hotelType,
+        hotelLevel as hotelLevel,
+        isGroupPurchase as isGroupPurchase,
+        redundantCityName as redundantCityName,
+        redundantProvinceName as redundantProvinceName,
+        redundantCountryName as redundantCountryName,
+        redundantHotelStore as redundantHotelStore,
+        creationDate as creationDate,
+        createdBy as createdBy,
+        modifyDate as modifyDate,
+        modifiedBy as modifiedBy
+        from itrip_hotel
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <!--根据酒店ID获取商圈(城市中发达的商业地段,地段有多个酒店)-->
+    <select id="getHotelAreaByHotelId" resultType="ItripAreaDic">
+        select
+        a.id as id,
+        (select d.name FROM itrip_area_dic d
+        WHERE d.isActivated=1 AND d.id = a.areaId) AS name
+        from itrip_hotel_trading_area a
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and a.id=#{id}
+            </if>
+        </trim>
+    </select>
+    <!--酒店特色，及特色描述-->
+    <select id="getHotelFeatureByHotelId" resultType="ItripLabelDic">
+        SELECT
+        f.id as id,
+        d.name AS name,
+        d.description as description
+        FROM itrip_hotel_feature f,itrip_label_dic d where f.featureId = d.id
+        <if test="id != null">
+            and f.hotelId=#{id}
+        </if>
+    </select>
+    <!--根据酒店id查找酒店的设施-->
+    <select id="getHotelFacilitiesById" resultType="cn.itrip.beans.vo.hotel.ItripSearchFacilitiesHotelVO">
+        select
+        facilities as facilities
+        from itrip_hotel
+        <trim prefix="WHERE" prefixOverrides="AND | or">
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+    <!--根据酒店id查找酒店政策-->
+    <select id="getHotelhotelPolicyById" resultType="cn.itrip.beans.vo.hotel.ItripSearchPolicyHotelVO">
+         select
+        hotelPolicy as  hotelPolicy
+        from itrip_hotel
+        <trim prefix="WHERE" prefixOverrides="AND | or">
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+</mapper>
